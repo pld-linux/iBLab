@@ -1,0 +1,19 @@
+--- anoncvs.aldigital.co.uk-iBLab/configure.in.orig	2000-09-23 15:56:52.000000000 +0200
++++ anoncvs.aldigital.co.uk-iBLab/configure.in	2014-09-07 17:27:34.794492488 +0200
+@@ -32,8 +32,8 @@
+ #
+ 
+ dnl Process this file with autoconf to produce a configure script.
+-AC_CONFIG_HEADER(config.h)
+ AC_INIT(src/iBLabAll.h)
++AC_CONFIG_HEADERS(config.h)
+ AC_SYS_INTERPRETER
+ AC_CANONICAL_HOST
+ 
+@@ -57,4 +57,5 @@
+ dnl Checks for library functions.
+ AC_FUNC_MEMCMP
+ 
+-AC_OUTPUT(test/Makefile src/Makefile Makefile)
++AC_CONFIG_FILES([test/Makefile src/Makefile Makefile])
++AC_OUTPUT

@@ -1,0 +1,557 @@
+--- anoncvs.aldigital.co.uk-iBLab/src/iBLabButton_ConvertTemperature.cpp.orig	2000-09-23 17:03:56.000000000 +0200
++++ anoncvs.aldigital.co.uk-iBLab/src/iBLabButton_ConvertTemperature.cpp	2014-09-07 17:01:44.707890847 +0200
+@@ -1,6 +1,6 @@
+ #include "iBLabButton.h"
+ #include "iBLabTrace.h"
+-#include <iostream.h>
++#include <iostream>
+ 
+ #include "../config.h"
+ #ifdef HAVE_UNISTD_H
+--- anoncvs.aldigital.co.uk-iBLab/src/iBLabButton_CopyScratchpad.cpp.orig	1998-05-04 16:49:53.000000000 +0200
++++ anoncvs.aldigital.co.uk-iBLab/src/iBLabButton_CopyScratchpad.cpp	2014-09-07 16:42:40.344605566 +0200
+@@ -1,6 +1,8 @@
+ #include "iBLabButton.h"
+-#include <iostream.h>
+-    
++#include <iostream>
++
++using namespace std;
++
+ bool iBLabButton::CopyScratchpad(unsigned short usAddress,iBLabScratchpadFlags flags)
+     {
+     if(TraceEvents())
+--- anoncvs.aldigital.co.uk-iBLab/src/iBLabButtonDriver.h.orig	1998-05-25 18:39:47.000000000 +0200
++++ anoncvs.aldigital.co.uk-iBLab/src/iBLabButtonDriver.h	2014-09-07 17:06:04.787879958 +0200
+@@ -6,7 +6,6 @@
+ 
+ #include "iBLabFamily.h"
+ #include "iBLabButton.h"
+-#include <iostream.h>
+ 
+ // Yes, I should use templates.
+ #define iBFamily(fam,name) \
+--- anoncvs.aldigital.co.uk-iBLab/src/iBLabButton.h.orig	2000-09-23 17:03:56.000000000 +0200
++++ anoncvs.aldigital.co.uk-iBLab/src/iBLabButton.h	2014-09-07 17:00:45.277893671 +0200
+@@ -3,9 +3,10 @@
+ #include "iBLabUtil.h"
+ #include "iBLabInterface.h"
+ 
++#include <iosfwd>
++
+ class iBLabInterface;
+ class iBLabFamily;
+-class ostream;
+ 
+ union iBLabScratchpadFlags
+     {
+@@ -19,7 +20,7 @@ union iBLabScratchpadFlags
+ 	bool bAuthorizationAccepted:1;
+ #endif
+ 
+-	Show(ostream &os) const;
++	void Show(std::ostream &os) const;
+ 	} flags;
+     uchar uc;
+     };
+@@ -66,7 +67,7 @@ public:
+ 
+     virtual const char *FamilyName() const=0;
+ 
+-    void ShowID(ostream &os) const;
++    void ShowID(std::ostream &os) const;
+     bool IDIs(const char *szID);
+     enum EScratchpadType
+ 	{
+--- anoncvs.aldigital.co.uk-iBLab/src/iBLabButton_ReadNVRAM.cpp.orig	1998-05-04 16:49:53.000000000 +0200
++++ anoncvs.aldigital.co.uk-iBLab/src/iBLabButton_ReadNVRAM.cpp	2014-09-07 16:43:14.781270786 +0200
+@@ -1,5 +1,5 @@
+ #include "iBLabButton.h"
+-#include <iostream.h>
++#include <iostream>
+ 
+ bool iBLabButton::ReadNVRAM(unsigned short usAddress,uchar *aucBuffer,
+ 			    int nBytes)
+--- anoncvs.aldigital.co.uk-iBLab/src/iBLabButton_ReadScratchpad2.cpp.orig	2000-09-23 17:03:57.000000000 +0200
++++ anoncvs.aldigital.co.uk-iBLab/src/iBLabButton_ReadScratchpad2.cpp	2014-09-07 17:01:08.317892400 +0200
+@@ -1,6 +1,8 @@
+ #include "iBLabButton.h"
+ #include <assert.h>
+-#include <iostream.h>
++#include <iostream>
++
++using namespace std;
+ 
+ bool iBLabButton::ReadScratchpad(unsigned char ucAddress,uchar *aucBuffer,
+ 				 unsigned unBytes)
+--- anoncvs.aldigital.co.uk-iBLab/src/iBLabButton_ReadScratchpad3.cpp.orig	2000-09-23 17:06:47.000000000 +0200
++++ anoncvs.aldigital.co.uk-iBLab/src/iBLabButton_ReadScratchpad3.cpp	2014-09-07 17:02:02.811223470 +0200
+@@ -1,7 +1,7 @@
+ #include "iBLabButton.h"
+ #include "iBLabTrace.h"
+ #include "iBLabCRC8.h"
+-#include <iostream.h>
++#include <iostream>
+ 
+ bool iBLabButton::ReadScratchpad(uchar *aucBuffer,unsigned unBytes)
+     {
+--- anoncvs.aldigital.co.uk-iBLab/src/iBLabButton_ReadScratchpad.cpp.orig	2000-09-23 16:57:30.000000000 +0200
++++ anoncvs.aldigital.co.uk-iBLab/src/iBLabButton_ReadScratchpad.cpp	2014-09-07 16:36:34.224620931 +0200
+@@ -1,6 +1,8 @@
+ #include "iBLabButton.h"
+ #include <assert.h>
+-#include <iostream.h>
++#include <iostream>
++
++using namespace std;
+ 
+ bool iBLabButton::ReadScratchpad(unsigned short *pusAddress,
+ 				 iBLabScratchpadFlags *pFlags,uchar *aucBuffer,
+--- anoncvs.aldigital.co.uk-iBLab/src/iBLabButton_Select.cpp.orig	2000-09-23 16:58:19.000000000 +0200
++++ anoncvs.aldigital.co.uk-iBLab/src/iBLabButton_Select.cpp	2014-09-07 16:36:48.477953665 +0200
+@@ -2,7 +2,9 @@
+ #include "iBLabInterface.h"
+ #include "iBLabCRC8.h"
+ #include "iBLabTrace.h"
+-#include <iostream.h>
++#include <iostream>
++
++using namespace std;
+ 
+ bool iBLabButton::Select()
+     {
+--- anoncvs.aldigital.co.uk-iBLab/src/iBLabButton_ShowID.cpp.orig	1998-12-13 16:56:18.000000000 +0100
++++ anoncvs.aldigital.co.uk-iBLab/src/iBLabButton_ShowID.cpp	2014-09-07 16:44:08.274601876 +0200
+@@ -1,6 +1,8 @@
+ #include "iBLabButton.h"
+ #include "iBLabTrace.h"
+-#include <iostream.h>
++#include <iostream>
++
++using namespace std;
+ 
+ void iBLabButton::ShowID(ostream &os) const
+     {
+--- anoncvs.aldigital.co.uk-iBLab/src/iBLabButton_Temperature.cpp.orig	1998-07-12 18:18:33.000000000 +0200
++++ anoncvs.aldigital.co.uk-iBLab/src/iBLabButton_Temperature.cpp	2014-09-07 17:02:16.961222655 +0200
+@@ -1,6 +1,6 @@
+ #include "iBLabButton.h"
+ #include "iBLabTrace.h"
+-#include <iostream.h>
++#include <iostream>
+ 
+ bool iBLabButton::Temperature(float *pfDegreesC)
+     {
+--- anoncvs.aldigital.co.uk-iBLab/src/iBLabButton_VerifyWriteScratchpad.cpp.orig	2000-09-23 17:03:57.000000000 +0200
++++ anoncvs.aldigital.co.uk-iBLab/src/iBLabButton_VerifyWriteScratchpad.cpp	2014-09-07 16:43:34.061269978 +0200
+@@ -1,6 +1,6 @@
+ #include "iBLabButton.h"
+ #include "iBLabTrace.h"
+-#include <iostream.h>
++#include <iostream>
+ 
+ bool iBLabButton::VerifyWriteScratchpad(unsigned short usAddress,
+ 					uchar *aucBuffer,unsigned unBytes)
+--- anoncvs.aldigital.co.uk-iBLab/src/iBLabButton_WriteNVRAM.cpp.orig	1998-05-04 16:49:55.000000000 +0200
++++ anoncvs.aldigital.co.uk-iBLab/src/iBLabButton_WriteNVRAM.cpp	2014-09-07 16:43:50.244602633 +0200
+@@ -1,6 +1,6 @@
+ #include "iBLabButton.h"
+ #include "iBLabTrace.h"
+-#include <iostream.h>
++#include <iostream>
+ 
+ bool iBLabButton::WriteNVRAM(unsigned short usAddress,uchar *aucBuffer,
+ 			     unsigned nBytes)
+--- anoncvs.aldigital.co.uk-iBLab/src/iBLabButton_WriteScratchpad.cpp.orig	2000-09-23 17:03:57.000000000 +0200
++++ anoncvs.aldigital.co.uk-iBLab/src/iBLabButton_WriteScratchpad.cpp	2014-09-07 16:38:24.691282961 +0200
+@@ -1,7 +1,7 @@
+ #include "iBLabButton.h"
+ #include "iBLabTrace.h"
+ #include <assert.h>
+-#include <iostream.h>
++#include <iostream>
+ 
+ bool iBLabButton::WriteScratchpad(unsigned short usAddress,uchar *aucBuffer,
+ 				  unsigned unBytes)
+--- anoncvs.aldigital.co.uk-iBLab/src/iBLabCRC16.h.orig	2000-09-23 17:06:47.000000000 +0200
++++ anoncvs.aldigital.co.uk-iBLab/src/iBLabCRC16.h	2014-09-07 17:05:34.147881246 +0200
+@@ -35,7 +35,7 @@ public:
+     unsigned short Value() const
+ 	{ return m_usCRC; }
+     bool CheckInverse(unsigned short usInverse) const
+-	{ return usInverse^Value() == 0xffff; }
++	{ return (usInverse ^ Value()) == 0xffff; }
+     bool CheckInverse(uchar *aucBuffer) const
+ 	{ return CheckInverse(aucBuffer[0]+(aucBuffer[1]<<8)); }
+     };
+--- anoncvs.aldigital.co.uk-iBLab/src/iBLabInterface_AddButton.cpp.orig	1998-04-25 16:11:45.000000000 +0200
++++ anoncvs.aldigital.co.uk-iBLab/src/iBLabInterface_AddButton.cpp	2014-09-07 16:31:45.617966376 +0200
+@@ -2,7 +2,9 @@
+ #include "iBLabFamily.h"
+ #include <assert.h>
+ #include <memory.h>
+-#include <iostream.h>
++#include <iostream>
++
++using namespace std;
+ 
+ static void FillBits(uchar *aucBytes,const uchar *aucBits,int nBits)
+     {
+--- anoncvs.aldigital.co.uk-iBLab/src/iBLabInterface.cpp.orig	1998-07-12 21:29:09.000000000 +0200
++++ anoncvs.aldigital.co.uk-iBLab/src/iBLabInterface.cpp	2014-09-07 16:25:44.287981539 +0200
+@@ -1,5 +1,5 @@
+ #include "iBLabInterface.h"
+-#include <iostream.h>
++#include <cstdlib>
+ 
+ iBLabInterface::iBLabInterface()
+     {
+--- anoncvs.aldigital.co.uk-iBLab/src/iBLabInterfaceDirect.cpp.orig	1998-07-12 21:29:11.000000000 +0200
++++ anoncvs.aldigital.co.uk-iBLab/src/iBLabInterfaceDirect.cpp	2014-09-07 16:33:40.927961536 +0200
+@@ -1,5 +1,7 @@
+ #include "iBLabInterfaceDirect.h"
+-#include <iostream.h>
++#include <iostream>
++
++using namespace std;
+ 
+ iBLabInterfaceDirect::iBLabInterfaceDirect(ESpeed nInitialSpeed)
+     {
+--- anoncvs.aldigital.co.uk-iBLab/src/iBLabInterfaceDirect.h.orig	1998-07-12 21:29:11.000000000 +0200
++++ anoncvs.aldigital.co.uk-iBLab/src/iBLabInterfaceDirect.h	2014-09-07 16:35:42.677956427 +0200
+@@ -9,12 +9,14 @@
+ 
+ class iBLabInterfaceDirect : public iBLabInterface
+     {
++public:
+     enum ESpeed
+ 	{
+ 	UNSET,
+ 	SLOW,
+ 	FAST
+ 	} m_eSpeed;
++private:
+     unsigned m_nDiscard;	// number of reads to discard on next real read
+ 
+     virtual void _Fast()=0;
+--- anoncvs.aldigital.co.uk-iBLab/src/iBLabInterfaceDirect_TouchBits.cpp.orig	2000-09-23 16:48:21.000000000 +0200
++++ anoncvs.aldigital.co.uk-iBLab/src/iBLabInterfaceDirect_TouchBits.cpp	2014-09-07 16:27:08.321311345 +0200
+@@ -1,9 +1,11 @@
+ #include "iBLabInterfaceDirect.h"
+ #include "iBLabUtil.h"
+ #include <assert.h>
+-#include <iostream.h>
++#include <iostream>
+ #include <stdio.h>
+ 
++using namespace std;
++
+ int iBLabInterfaceDirect::Read(uchar *aucBuf,int nLength)
+     {
+ //    if(m_bTraceEvents && m_nDiscard)
+--- anoncvs.aldigital.co.uk-iBLab/src/iBLabInterface_HardReset.cpp.orig	1998-05-03 20:03:34.000000000 +0200
++++ anoncvs.aldigital.co.uk-iBLab/src/iBLabInterface_HardReset.cpp	2014-09-07 16:33:19.514629101 +0200
+@@ -1,5 +1,7 @@
+ #include "iBLabInterface.h"
+-#include <iostream.h>
++#include <iostream>
++
++using namespace std;
+ 
+ void iBLabInterface::HardReset()
+     {
+--- anoncvs.aldigital.co.uk-iBLab/src/iBLabInterface.h.orig	2000-09-23 15:57:41.000000000 +0200
++++ anoncvs.aldigital.co.uk-iBLab/src/iBLabInterface.h	2014-09-07 16:31:08.381301270 +0200
+@@ -18,6 +18,7 @@ class iBLabButton;
+ */
+ class iBLabInterface
+     {
++public:
+     enum ETraceType
+ 	{
+ 	IN_REAL,
+@@ -29,6 +30,7 @@ class iBLabInterface
+ 	OUT_TOUCH_BIT,
+ 	FLUSH
+ 	};
++private:
+     mutable ETraceType m_eLastType;
+ 
+     bool m_bTraceReal:1;
+--- anoncvs.aldigital.co.uk-iBLab/src/iBLabInterface_ID.cpp.orig	1998-07-12 21:29:14.000000000 +0200
++++ anoncvs.aldigital.co.uk-iBLab/src/iBLabInterface_ID.cpp	2014-09-07 16:26:44.244645690 +0200
+@@ -1,6 +1,8 @@
+ #include "iBLabInterface.h"
+ #include "iBLabCRC8.h"
+-#include <iostream.h>
++#include <iostream>
++
++using namespace std;
+ 
+ bool iBLabInterface::ID(uchar *pucFamily,uchar aucID[6])
+     {
+--- anoncvs.aldigital.co.uk-iBLab/src/iBLabInterface_Scan.cpp.orig	1998-07-12 21:29:15.000000000 +0200
++++ anoncvs.aldigital.co.uk-iBLab/src/iBLabInterface_Scan.cpp	2014-09-07 16:31:31.064633653 +0200
+@@ -1,6 +1,8 @@
+ #include "iBLabInterface.h"
+ #include "iBLabCRC8.h"
+-#include <iostream.h>
++#include <iostream>
++
++using namespace std;
+ 
+ bool iBLabInterface::Scan()
+     {
+--- anoncvs.aldigital.co.uk-iBLab/src/iBLabInterfaceSerial.cpp.orig	2000-09-23 16:51:52.000000000 +0200
++++ anoncvs.aldigital.co.uk-iBLab/src/iBLabInterfaceSerial.cpp	2014-09-07 16:34:03.707960579 +0200
+@@ -2,7 +2,7 @@
+ #include <termios.h>
+ #include <fcntl.h>
+ #include <errno.h>
+-#include <iostream.h>
++#include <iostream>
+ #include <stdio.h>
+ #include <string.h>
+ #include <sys/stat.h>
+@@ -13,6 +13,7 @@
+ # include <unistd.h>
+ #endif
+ 
++using namespace std;
+ 
+ iBLabInterfaceSerial::iBLabInterfaceSerial(const char *szTTY)
+     : iBLabInterfaceDirect(SLOW)
+--- anoncvs.aldigital.co.uk-iBLab/src/iBLabInterface_Trace.cpp.orig	1998-04-25 16:11:45.000000000 +0200
++++ anoncvs.aldigital.co.uk-iBLab/src/iBLabInterface_Trace.cpp	2014-09-07 16:26:24.364646523 +0200
+@@ -1,8 +1,10 @@
+ #include "iBLabInterface.h"
+-#include <iostream.h>
++#include <iostream>
+ #include <assert.h>
+ #include <stdio.h>
+ 
++using namespace std;
++
+ void iBLabInterface::StartType(ETraceType eType) const
+     {
+     switch(eType)
+--- anoncvs.aldigital.co.uk-iBLab/src/iBLabTMEX.cpp.orig	2000-09-23 17:08:33.000000000 +0200
++++ anoncvs.aldigital.co.uk-iBLab/src/iBLabTMEX.cpp	2014-09-07 17:04:47.467883221 +0200
+@@ -1,10 +1,11 @@
+ #include "iBLabButton.h"
+ #include "iBLabTMEX.h"
+ #include "iBLabCRC16.h"
+-#include <std.h>
+ #include <stdio.h>
+ #include <string.h>
+-#include <iostream.h>
++#include <iostream>
++
++using namespace std;
+ 
+ int iBLabTMEX::ReadPage(int nPage,uchar aucBuffer[29])
+     {
+@@ -177,7 +178,7 @@ void iBLabTMEXDir::Extract(uchar *aucBuf
+ 
+ int iBLabTMEXDir::ReadFile(const char *szFilename,uchar **paucBuffer)
+     {
+-    char *p=strchr(szFilename,'/');
++    const char *p=strchr(szFilename,'/');
+ 
+     if(p)
+ 	{
+--- anoncvs.aldigital.co.uk-iBLab/src/iBLabTMEX.h.orig	2000-09-23 17:08:34.000000000 +0200
++++ anoncvs.aldigital.co.uk-iBLab/src/iBLabTMEX.h	2014-09-07 17:04:10.537884132 +0200
+@@ -81,7 +81,7 @@ public:
+     int ReadPages(int nPage,uchar **paucBuffer);
+ 
+     bool WritePage(int nPage,const uchar *aucBuffer,int nBytes);
+-    int WritePages(const uchar *aucBuffer,int nBytes,uchar *aucBuffer,
++    int WritePages(const uchar *aucBuffer,int nBytes,uchar *aucBitmap,
+ 		   int nBitmap);
+ 
+     int ReadFile(const char *szFilename,uchar **paucBuffer);
+--- anoncvs.aldigital.co.uk-iBLab/src/iBLabTrace.cpp.orig	1998-12-13 16:56:19.000000000 +0100
++++ anoncvs.aldigital.co.uk-iBLab/src/iBLabTrace.cpp	2014-09-07 17:06:26.361212251 +0200
+@@ -1,6 +1,8 @@
+ #include "iBLabTrace.h"
+ #include <stdio.h>
+-#include <iostream.h>
++#include <iostream>
++
++using namespace std;
+ 
+ void Dump(ostream &os,const unsigned char *auc,int nBytes)
+     {
+--- anoncvs.aldigital.co.uk-iBLab/src/iBLabTrace.h.orig	1998-12-13 16:56:19.000000000 +0100
++++ anoncvs.aldigital.co.uk-iBLab/src/iBLabTrace.h	2014-09-07 16:38:57.221281595 +0200
+@@ -1,7 +1,8 @@
+ // -*-C++-*-
+-class ostream;
+ 
+-void Dump(ostream &os,const unsigned char *auc,int nBytes);
++#include <iosfwd>
+ 
+-#define event(x)	if(TraceEvents()) cout << x << flush
++void Dump(std::ostream &os,const unsigned char *auc,int nBytes);
++
++#define event(x)	if(TraceEvents()) std::cout << x << std::flush
+ #define eventret(x,r)	{ event(x); return r; }
+--- anoncvs.aldigital.co.uk-iBLab/src/iBLabUtil.h.orig	2000-09-23 16:48:21.000000000 +0200
++++ anoncvs.aldigital.co.uk-iBLab/src/iBLabUtil.h	2014-09-07 16:30:24.247969790 +0200
+@@ -1,3 +1,6 @@
++#include <cstdlib>
++#include <cstring>
++
+ #ifndef NULL
+ # define NULL 0
+ #endif
+@@ -13,7 +16,7 @@ inline char *newstrdup(const char *szStr
+     }
+ 
+ inline char *newstrdup(const uchar *szString)
+-    { return newstrdup(static_cast<const char *>(szString)); }
++    { return newstrdup(reinterpret_cast<const char *>(szString)); }
+ 
+ // Strictly compare signed and unsigned values
+ inline bool Equal(int n1,unsigned n2)
+--- anoncvs.aldigital.co.uk-iBLab/test/iBLabIDSingle.cpp.orig	1998-04-25 16:11:46.000000000 +0200
++++ anoncvs.aldigital.co.uk-iBLab/test/iBLabIDSingle.cpp	2014-09-07 17:46:05.997778820 +0200
+@@ -1,7 +1,10 @@
+-#include <iostream.h>
++#include <cstdlib>
++#include <iostream>
+ #include <iBLabInterfaceSerial.h>
+ #include <iBLabTrace.h>
+ 
++using namespace std;
++
+ int main(int argc,char **argv)
+     {
+     if(argc != 2)
+--- anoncvs.aldigital.co.uk-iBLab/test/iBLabReset.cpp.orig	1999-03-20 18:07:34.000000000 +0100
++++ anoncvs.aldigital.co.uk-iBLab/test/iBLabReset.cpp	2014-09-07 17:34:02.464476222 +0200
+@@ -1,7 +1,10 @@
+-#include <iostream.h>
++#include <cstdlib>
++#include <iostream>
+ #include <iBLabInterfaceSerial.h>
+ #include <stdio.h>
+ 
++using namespace std;
++
+ int main(int argc,char **argv)
+     {
+     if(argc != 2)
+--- anoncvs.aldigital.co.uk-iBLab/test/iBLabScan.cpp.orig	1998-12-14 15:09:11.000000000 +0100
++++ anoncvs.aldigital.co.uk-iBLab/test/iBLabScan.cpp	2014-09-07 17:46:57.197776984 +0200
+@@ -2,11 +2,14 @@
+ #include <iBLabTrace.h>
+ #include <iBLabButton.h>
+ #include <iBLabAll.h>
+-#include <iostream.h>
++#include <cstdio>
++#include <iostream>
+ #include <memory.h>
+ #include <stdlib.h>
+ #include <unistd.h>
+ 
++using namespace std;
++
+ bool g_bWrite=false;
+ char *g_szPName;
+ 
+--- anoncvs.aldigital.co.uk-iBLab/test/iBLabTemperature.cpp.orig	1998-12-14 15:09:11.000000000 +0100
++++ anoncvs.aldigital.co.uk-iBLab/test/iBLabTemperature.cpp	2014-09-07 17:47:29.101109037 +0200
+@@ -1,10 +1,13 @@
+ #include <iBLabInterfaceSerial.h>
+ #include <iBLabButton.h>
+ #include <iBLabAll.h>
+-#include <iostream.h>
++#include <cstdio>
++#include <iostream>
+ #include <stdlib.h>
+ #include <unistd.h>
+ 
++using namespace std;
++
+ static const char *g_szPName;
+ 
+ void Usage()
+--- anoncvs.aldigital.co.uk-iBLab/test/iBLabTMEXCopy.cpp.orig	1998-12-14 23:14:46.000000000 +0100
++++ anoncvs.aldigital.co.uk-iBLab/test/iBLabTMEXCopy.cpp	2014-09-07 17:53:08.097761607 +0200
+@@ -3,11 +3,13 @@
+ #include <iBLabButton.h>
+ #include <iBLabAll.h>
+ #include <iBLabTMEX.h>
+-#include <iostream.h>
++#include <iostream>
+ #include <stdio.h>
+-#include <fstream.h>
++#include <fstream>
+ #include <string.h>
+ 
++using namespace std;
++
+ char *g_szPName;
+ 
+ int main(int argc,char **argv)
+@@ -63,13 +65,13 @@ int main(int argc,char **argv)
+ 		if(!strcmp(szDestFile,"-"))
+ 		    os=&cout;
+ 		else
+-		    os=new ofstream(szDestFile,ios::trunc|ios::out,0664);
++		    os=new ofstream(szDestFile,ios::trunc|ios::out);
+ 
+ 		assert(os->good());
+ 
+ 		cerr << "Writing " << nLength << " bytes to "
+ 		    << szDestFile << '\n';
+-		os->write(aucBuffer,nLength);
++		os->write(reinterpret_cast<char*>(aucBuffer),nLength);
+ 		}
+ 	    }
+ 	}
+--- anoncvs.aldigital.co.uk-iBLab/test/iBLabTMEXDir.cpp.orig	1998-12-14 23:14:46.000000000 +0100
++++ anoncvs.aldigital.co.uk-iBLab/test/iBLabTMEXDir.cpp	2014-09-07 17:47:47.191108280 +0200
+@@ -3,9 +3,11 @@
+ #include <iBLabButton.h>
+ #include <iBLabAll.h>
+ #include <iBLabTMEX.h>
+-#include <iostream.h>
++#include <iostream>
+ #include <stdio.h>
+ 
++using namespace std;
++
+ char *g_szPName;
+ 
+ void ShowDir(const iBLabTMEXDir *pDir,int nLevel)
+--- anoncvs.aldigital.co.uk-iBLab/test/Makefile.in.orig	1998-12-16 11:35:11.000000000 +0100
++++ anoncvs.aldigital.co.uk-iBLab/test/Makefile.in	2014-09-07 17:45:35.577780454 +0200
+@@ -54,19 +54,19 @@ lib:
+ 	cd ../src; make
+ 
+ iBLabReset: iBLabReset.o $(IBLIB)
+-	$(CXX) $(CCFLAGS) -o $@ $>
++	$(CXX) $(CCFLAGS) -o $@ $^
+ 
+ iBLabIDSingle: iBLabIDSingle.o $(IBLIB)
+-	$(CXX) $(CCFLAGS) -o $@ $>
++	$(CXX) $(CCFLAGS) -o $@ $^
+ 
+ iBLabScan: iBLabScan.o $(IBLIB)
+-	$(CXX) $(CCFLAGS) -o $@ $>
++	$(CXX) $(CCFLAGS) -o $@ $^
+ 
+ iBLabTemperature: iBLabTemperature.o $(IBLIB)
+-	$(CXX) $(CCFLAGS) -o $@ $>
++	$(CXX) $(CCFLAGS) -o $@ $^
+ 
+ iBLabTMEXDir: iBLabTMEXDir.o $(IBLIB)
+-	$(CXX) $(CCFLAGS) -o $@ $>
++	$(CXX) $(CCFLAGS) -o $@ $^
+ 
+ iBLabTMEXCopy: iBLabTMEXCopy.o $(IBLIB)
+-	$(CXX) $(CCFLAGS) -o $@ $>
++	$(CXX) $(CCFLAGS) -o $@ $^
