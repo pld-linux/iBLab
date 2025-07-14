@@ -52,8 +52,8 @@ Ten pakiet zawiera bibliotekę programistyczną.
 
 %prep
 %setup -q -n anoncvs.aldigital.co.uk-iBLab
-%patch0 -p1
-%patch1 -p1
+%patch -P0 -p1
+%patch -P1 -p1
 
 %build
 %{__autoconf}
